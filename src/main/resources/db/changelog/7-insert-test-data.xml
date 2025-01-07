@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="7-roles" author="mathew">
+        <insert tableName="roles">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7-users" author="mathew">
+        <insert tableName="users">
+            <column name="id" value="1"/>
+            <column name="username" value="seller52"/>
+            <column name="password" value="password123"/>
+            <column name="rating" value="4.5"/>
+            <column name="nickname" value="seller52"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="2"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="adminpass"/>
+            <column name="rating" value="5.0"/>
+            <column name="nickname" value="admin"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7-ads" author="mathew">
+        <insert tableName="ads">
+            <column name="id" value="1"/>
+            <column name="title" value="MTB велосипед"/>
+            <column name="ad_type" value="TRANSPORT"/>
+            <column name="description" value="Горный велосипед."/>
+            <column name="price" value="150.00"/>
+            <column name="seller_id" value="1"/>
+        </insert>
+        <insert tableName="ads">
+            <column name="id" value="2"/>
+            <column name="title" value="Ноутбук MSI"/>
+            <column name="ad_type" value="ELECTRONICS"/>
+            <column name="description" value="Мощный ноутбук, идеально подходящий для игр и работы."/>
+            <column name="price" value="750.00"/>
+            <column name="seller_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7-comments" author="mathew">
+        <insert tableName="comments">
+            <column name="id" value="1"/>
+            <column name="content" value="Сколько скоростей?"/>
+            <column name="user_id" value="2"/>
+            <column name="ad_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7-messages" author="mathew">
+        <insert tableName="messages">
+            <column name="id" value="1"/>
+            <column name="sender_id" value="2"/>
+            <column name="receiver_id" value="1"/>
+            <column name="content" value="Торг есть?"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7-users_roles" author="mathew">
+        <insert tableName="users_roles">
+            <column name="userId" value="1"/>
+            <column name="roleId" value="1"/>
+        </insert>
+
+        <insert tableName="users_roles">
+            <column name="userId" value="2"/>
+            <column name="roleId" value="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

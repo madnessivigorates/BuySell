@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <include file="1-create-users-table.xml" relativeToChangelogFile="true"/>
+    <include file="2-create-ads-table.xml" relativeToChangelogFile="true"/>
+    <include file="3-create-comments-table.xml" relativeToChangelogFile="true"/>
+    <include file="4-create-messages-table.xml" relativeToChangelogFile="true"/>
+    <include file="5-create-roles-table.xml" relativeToChangelogFile="true"/>
+    <include file="6-create-users-roles-table.xml" relativeToChangelogFile="true"/>
+    <include file="7-insert-test-data.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>
