@@ -2,6 +2,9 @@ package com.Senla.BuySell.model;
 
 import com.Senla.BuySell.enums.AdType;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -28,18 +31,55 @@ public class Ad {
     @JoinColumn(name = "seller_id", nullable = false)
     private User user;
 
+    @Column(name = "is_promoted", nullable = false)
+    private boolean isPromoted = false;
+
+    @Column(name = "promoted_until")
+    private LocalDateTime promotedUntil = null;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
     @OneToMany (mappedBy = "ad", fetch = FetchType.EAGER)
     private List<Comment> commentList;
 
     public Ad() {
     }
 
-    public Ad(String title, AdType adType, String description, double price, User user) {
+    public Ad(String title, AdType adType, String description, double price,
+              User user, boolean isPromoted, LocalDateTime promotedUntil, LocalDateTime createdAt ) {
         this.title = title;
         this.adType = adType;
         this.description = description;
         this.price = price;
         this.user = user;
+        this.isPromoted = isPromoted;
+        this.promotedUntil = promotedUntil;
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getPromotedUntil() {
+        return promotedUntil;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setPromotedUntil(LocalDateTime promotedUntil) {
+        this.promotedUntil = promotedUntil;
+    }
+
+    public boolean isPromoted() {
+        return isPromoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
     }
 
     public Long getId() {
@@ -98,15 +138,4 @@ public class Ad {
         this.commentList = commentList;
     }
 
-    @Override
-    public String toString() {
-        return "Ad{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", adType=" + adType +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", commentList=" + commentList +
-                '}';
-    }
 }

@@ -1,4 +1,52 @@
 package com.Senla.BuySell.controller;
 
+import com.Senla.BuySell.dto.message.MessageDto;
+import com.Senla.BuySell.dto.message.SendMessageDto;
+import com.Senla.BuySell.service.MessageService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+@RestController
+@RequestMapping("/api/messages")
 public class MessageController {
+    private final MessageService messageService;
+
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/chat/{senderId}/{receiverId}")
+    public ResponseEntity<?> getChatHistory(@PathVariable Long senderId, @PathVariable Long receiverId) {
+        try {
+            List<MessageDto> chatHistory = messageService.getChatHistory(senderId, receiverId);
+            return ResponseEntity.ok(chatHistory);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/send/{senderId}/{receiverId}")
+    public ResponseEntity<?>  sendMessage(@RequestBody SendMessageDto SendMessageDto,
+                                          @PathVariable Long senderId,
+                                          @PathVariable Long receiverId) {
+        try {
+            messageService.sendMessage(SendMessageDto,senderId, receiverId);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Сообщение успешно отправлено.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Произошла ошибка при отправке сообщения.");
+        }
+    }
 }

@@ -26,6 +26,15 @@
             <column name="seller_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
+            <column name="is_promoted" type="TINYINT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="promoted_until" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <addForeignKeyConstraint

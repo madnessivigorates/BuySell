@@ -49,6 +49,7 @@ public class UserService implements UserDetailsService {
         return userMapper.toDtoList(userRepository.findAll());
     }
 
+    @Transactional
     public void updateUser(Long id, UserProfileUpdateDto updateDTO) {
         User user = findUserById(id);
         updateIfNotNullOrEmpty(updateDTO.username(), user::setUsername);
@@ -58,6 +59,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void registerNewUser(UserRegisterDto registerRequest) {
         String encodedPassword = passwordEncoder.encode(registerRequest.password());
         User newUser = new User(registerRequest.username(), registerRequest.nickname(), encodedPassword);

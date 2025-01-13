@@ -20,6 +20,9 @@
             <column name="content" type="TEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="sent_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <addForeignKeyConstraint

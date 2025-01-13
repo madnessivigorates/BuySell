@@ -9,8 +9,10 @@ import com.Senla.BuySell.model.User;
 import com.Senla.BuySell.repository.AdRepository;
 import com.Senla.BuySell.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
@@ -29,7 +31,7 @@ public class AdService {
     }
 
     public List<AdDto> getAllAds() {
-        return adMapper.toDtoList(adRepository.findAll());
+        return adMapper.toDtoList(adRepository.findAllByOrderByPromotedAndUserRatingDesc());
     }
 
     public AdDto getAdById(Long id) {
@@ -46,10 +48,21 @@ public class AdService {
                 AdType.fromDisplayName(adCreateDto.adType()),
                 adCreateDto.description(),
                 adCreateDto.price(),
-                user
+                user,
+                adCreateDto.isPromoted(),
+                LocalDateTime.now().plusHours(adCreateDto.promotedUntil()),
+                LocalDateTime.now()
         );
         adRepository.save(ad);
         return adMapper.toDto(ad);
+    }
+
+    public void promoteAd(Long adId, long hours) {
+        Ad ad = adRepository.findById(adId)
+                .orElseThrow(() -> new NoSuchElementException("Объявление не найдено."));
+        ad.setPromoted(true);
+        ad.setPromotedUntil(LocalDateTime.now().plusHours(hours));
+        adRepository.save(ad);
     }
 
     public AdDto updateAd(Long id, AdDto adDto) {
@@ -68,6 +81,18 @@ public class AdService {
             throw new NoSuchElementException("Объявление с таким ID не найдено.");
         }
         adRepository.deleteById(id);
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public void updatePromotions() {
+        List<Ad> ads = adRepository.findAll();
+        for (Ad ad : ads) {
+            if (ad.getPromotedUntil() != null && ad.getPromotedUntil().isBefore(LocalDateTime.now())) {
+                ad.setPromoted(false);
+                ad.setPromotedUntil(null);
+                adRepository.save(ad);
+            }
+        }
     }
 
     private <T> void updateIfNotNullOrEmpty(T value, Consumer<T> setter) {

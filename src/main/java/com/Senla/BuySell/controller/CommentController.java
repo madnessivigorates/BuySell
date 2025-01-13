@@ -1,6 +1,6 @@
 package com.Senla.BuySell.controller;
 
-import com.Senla.BuySell.dto.comment.SentCommentDto;
+import com.Senla.BuySell.dto.comment.SendCommentDto;
 import com.Senla.BuySell.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +22,11 @@ public class CommentController {
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ADMIN')")
     @PostMapping("/send/{adId}/{userId}")
-    public ResponseEntity<?> sendComment(@RequestBody SentCommentDto sentCommentDto,
+    public ResponseEntity<?> sendComment(@RequestBody SendCommentDto sendCommentDto,
                                          @PathVariable("adId") Long adId,
                                          @PathVariable("userId") Long userId) {
         try {
-            commentService.sendComment(sentCommentDto, adId, userId);
+            commentService.sendComment(sendCommentDto, adId, userId);
             return ResponseEntity.ok("Комментарий успешно отправлен!");
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

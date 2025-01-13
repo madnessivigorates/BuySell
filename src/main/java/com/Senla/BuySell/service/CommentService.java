@@ -1,6 +1,6 @@
 package com.Senla.BuySell.service;
 
-import com.Senla.BuySell.dto.comment.SentCommentDto;
+import com.Senla.BuySell.dto.comment.SendCommentDto;
 import com.Senla.BuySell.model.Ad;
 import com.Senla.BuySell.model.Comment;
 import com.Senla.BuySell.model.User;
@@ -25,12 +25,12 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
-    public void sendComment(SentCommentDto sentCommentDto, Long adId, Long userId) {
+    public void sendComment(SendCommentDto sendCommentDto, Long adId, Long userId) {
         Ad ad = adRepository.findById(adId)
                 .orElseThrow(() -> new NoSuchElementException("Не удалось найти объявление."));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("Не удалось найти пользователя."));
-        Comment comment = new Comment(sentCommentDto.content(),user,ad);
+        Comment comment = new Comment(sendCommentDto.content(),user,ad);
         try {
             commentRepository.save(comment);
         } catch (Exception e) {

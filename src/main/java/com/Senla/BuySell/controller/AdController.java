@@ -42,6 +42,13 @@ public class AdController {
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/promote/{id}")
+    public ResponseEntity<?> promoteAd(@PathVariable Long id, @RequestParam long hours) {
+        adService.promoteAd(id, hours);
+        return ResponseEntity.ok("Вы успешно продвинули своё объявление!");
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<AdDto> createAd(@RequestBody AdCreateDto adCreateDto) {
         AdDto createdAdd = adService.createAd(adCreateDto);
