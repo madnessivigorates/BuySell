@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="7-roles" author="mathew">
+    <changeSet id="8-roles" author="mathew">
         <insert tableName="roles">
             <column name="id" value="1"/>
             <column name="name" value="ROLE_USER"/>
@@ -17,7 +17,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="7-users" author="mathew">
+    <changeSet id="8-users" author="mathew">
         <insert tableName="users">
             <column name="id" value="1"/>
             <column name="username" value="seller52"/>
@@ -34,7 +34,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="7-ads" author="mathew">
+    <changeSet id="8-ads" author="mathew">
         <insert tableName="ads">
             <column name="id" value="1"/>
             <column name="title" value="MTB велосипед"/>
@@ -60,7 +60,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="7-comments" author="mathew">
+    <changeSet id="8-comments" author="mathew">
         <insert tableName="comments">
             <column name="id" value="1"/>
             <column name="content" value="Сколько скоростей?"/>
@@ -69,7 +69,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="7-messages" author="mathew">
+    <changeSet id="8-messages" author="mathew">
         <insert tableName="messages">
             <column name="id" value="1"/>
             <column name="sender_id" value="2"/>
@@ -79,7 +79,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="7-users_roles" author="mathew">
+    <changeSet id="8-users_roles" author="mathew">
         <insert tableName="users_roles">
             <column name="userId" value="1"/>
             <column name="roleId" value="1"/>
@@ -88,6 +88,27 @@
         <insert tableName="users_roles">
             <column name="userId" value="2"/>
             <column name="roleId" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="8-reviews" author="mathew">
+        <insert tableName="reviews">
+            <column name="receiver_id" value="1"/>
+            <column name="sender_id" value="2"/>
+            <column name="rating" value="5"/>
+            <column name="comment" value="все быстро и качественно отправил"/>
+        </insert>
+        <insert tableName="reviews">
+            <column name="receiver_id" value="1"/>
+            <column name="sender_id" value="2"/>
+            <column name="rating" value="4"/>
+            <column name="comment" value="приятный в общении"/>
+        </insert>
+        <insert tableName="reviews">
+            <column name="receiver_id" value="2"/>
+            <column name="sender_id" value="1"/>
+            <column name="rating" value="3"/>
+            <column name="comment" value="долго отправлял"/>
         </insert>
     </changeSet>
 

@@ -2,7 +2,6 @@ package com.Senla.BuySell.service;
 
 import com.Senla.BuySell.dto.message.MessageDto;
 import com.Senla.BuySell.dto.message.MessageDtoMapper;
-import com.Senla.BuySell.dto.message.SendMessageDto;
 import com.Senla.BuySell.model.Message;
 import com.Senla.BuySell.model.User;
 import com.Senla.BuySell.repository.MessageRepository;
@@ -34,11 +33,11 @@ public class MessageService {
     }
 
     @Transactional
-    public void sendMessage(SendMessageDto sendMessageDto,Long senderId,Long receiverId) {
+    public void sendMessage(MessageDto messageDto,Long senderId,Long receiverId) {
         User sender = findUserById(senderId, "Отправитель не найден.");
         User receiver = findUserById(receiverId, "Получатель не найден.");
 
-        Message message = new Message(sender, receiver, sendMessageDto.content());
+        Message message = new Message(sender, receiver, messageDto.getContent());
         messageRepository.save(message);
     }
 

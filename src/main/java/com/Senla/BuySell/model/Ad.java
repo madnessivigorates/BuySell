@@ -32,10 +32,10 @@ public class Ad {
     private User user;
 
     @Column(name = "is_promoted", nullable = false)
-    private boolean isPromoted = false;
+    private boolean isPromoted;
 
     @Column(name = "promoted_until")
-    private LocalDateTime promotedUntil = null;
+    private LocalDateTime promotedUntil;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

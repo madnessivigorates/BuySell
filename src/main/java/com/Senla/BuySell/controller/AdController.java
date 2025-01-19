@@ -1,9 +1,10 @@
 package com.Senla.BuySell.controller;
 
-import com.Senla.BuySell.dto.ad.AdCreateDto;
 import com.Senla.BuySell.dto.ad.AdDto;
-import com.Senla.BuySell.model.Ad;
+import com.Senla.BuySell.dto.views.Views;
+import com.Senla.BuySell.enums.AdType;
 import com.Senla.BuySell.service.AdService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,19 @@ public class AdController {
     }
 
     @GetMapping("/all")
-    public List<AdDto> getAllAds(){
-        return adService.getAllAds();
+    @JsonView(Views.Summary.class)
+    public List<AdDto> getAllAds(@RequestParam(value = "adType", required = false) String adType,
+                                 @RequestParam(value = "keyword", required = false) String keyword) {
+        AdType type = null;
+        if (adType != null && !adType.isEmpty()) {
+            type = AdType.fromDisplayName(adType);
+        }
+        return adService.getAllAds(type, keyword);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<?> getAllAds(@PathVariable Long id) {
+    @JsonView(Views.AdDetailed.class)
+    public ResponseEntity<?> getAd(@PathVariable Long id) {
         try {
             AdDto adDto = adService.getAdById(id);
             return ResponseEntity.ok(adDto);
@@ -50,8 +58,8 @@ public class AdController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<AdDto> createAd(@RequestBody AdCreateDto adCreateDto) {
-        AdDto createdAdd = adService.createAd(adCreateDto);
+    public ResponseEntity<AdDto> createAd(@RequestBody AdDto adDto) {
+        AdDto createdAdd = adService.createAd(adDto);
         return new ResponseEntity<>(createdAdd, HttpStatus.CREATED);
     }
 

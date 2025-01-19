@@ -25,11 +25,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private List<Role> roles;
 
-    @Column(name = "rating", nullable = false)
-    private double rating;
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.EAGER)
+    private List<Review> reviewList;
 
     @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)
     private List<Ad> adList;
+
+    private double rating;
 
     public User() {
     }
@@ -56,6 +58,14 @@ public class User {
         this.username = username;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
     public String getNickname() {
         return nickname;
     }
@@ -80,12 +90,12 @@ public class User {
         this.roles = roles;
     }
 
-    public double getRating() {
-        return rating;
+    public List<Review> getReviewList() {
+        return reviewList;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 
     public List<Ad> getAdList() {
@@ -96,16 +106,4 @@ public class User {
         this.adList = adList;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                ", rating=" + rating +
-                ", adList=" + adList +
-                '}';
-    }
 }

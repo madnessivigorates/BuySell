@@ -2,7 +2,7 @@ package com.Senla.BuySell.controller;
 
 import com.Senla.BuySell.dto.jwt.JwtRequest;
 import com.Senla.BuySell.dto.jwt.JwtResponse;
-import com.Senla.BuySell.dto.user.UserRegisterDto;
+import com.Senla.BuySell.dto.user.UserDto;
 import com.Senla.BuySell.exceptions.AppError;
 import com.Senla.BuySell.service.UserService;
 import com.Senla.BuySell.utils.JwtTokenUtils;
@@ -45,15 +45,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDto registerRequest) {
-        if (userService.existsByUsername(registerRequest.username())) {
+    public ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
+        if (userService.existsByUsername(userDto.getUsername())) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с таким именем уже существует"),
                     HttpStatus.BAD_REQUEST
             );
         }
         try {
-            userService.registerNewUser(registerRequest);
+            userService.registerNewUser(userDto);
             return new ResponseEntity<>("Регистрация прошла успешно", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(

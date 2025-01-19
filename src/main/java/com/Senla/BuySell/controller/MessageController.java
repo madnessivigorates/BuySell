@@ -1,8 +1,9 @@
 package com.Senla.BuySell.controller;
 
 import com.Senla.BuySell.dto.message.MessageDto;
-import com.Senla.BuySell.dto.message.SendMessageDto;
+import com.Senla.BuySell.dto.views.Views;
 import com.Senla.BuySell.service.MessageService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +23,7 @@ public class MessageController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/chat/{senderId}/{receiverId}")
+    @JsonView(Views.Summary.class)
     public ResponseEntity<?> getChatHistory(@PathVariable Long senderId, @PathVariable Long receiverId) {
         try {
             List<MessageDto> chatHistory = messageService.getChatHistory(senderId, receiverId);
@@ -34,11 +36,11 @@ public class MessageController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/send/{senderId}/{receiverId}")
-    public ResponseEntity<?>  sendMessage(@RequestBody SendMessageDto SendMessageDto,
+    public ResponseEntity<?>  sendMessage(@RequestBody MessageDto messageDto,
                                           @PathVariable Long senderId,
                                           @PathVariable Long receiverId) {
         try {
-            messageService.sendMessage(SendMessageDto,senderId, receiverId);
+            messageService.sendMessage(messageDto, senderId, receiverId);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Сообщение успешно отправлено.");
         } catch (NoSuchElementException e) {

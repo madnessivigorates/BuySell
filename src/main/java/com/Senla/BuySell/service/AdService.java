@@ -1,6 +1,5 @@
 package com.Senla.BuySell.service;
 
-import com.Senla.BuySell.dto.ad.AdCreateDto;
 import com.Senla.BuySell.dto.ad.AdDto;
 import com.Senla.BuySell.dto.ad.AdMapper;
 import com.Senla.BuySell.enums.AdType;
@@ -30,8 +29,9 @@ public class AdService {
         this.userRepository = userRepository;
     }
 
-    public List<AdDto> getAllAds() {
-        return adMapper.toDtoList(adRepository.findAllByOrderByPromotedAndUserRatingDesc());
+    public List<AdDto> getAllAds(AdType adType, String keyword) {
+        List<Ad> ads = adRepository.findAllByAdTypeAndKeyword(adType, keyword);
+        return adMapper.toDtoList(ads);
     }
 
     public AdDto getAdById(Long id) {
@@ -40,17 +40,17 @@ public class AdService {
                 .orElseThrow(() -> new NoSuchElementException("Объявление с таким ID не найдено."));
     }
 
-    public AdDto createAd(AdCreateDto adCreateDto) {
-        User user = userRepository.findById(adCreateDto.ownerId())
+    public AdDto createAd(AdDto adDto) {
+        User user = userRepository.findById(adDto.getOwnerId())
                 .orElseThrow(() -> new NoSuchElementException("Пользователь не найден."));
         Ad ad = new Ad(
-                adCreateDto.title(),
-                AdType.fromDisplayName(adCreateDto.adType()),
-                adCreateDto.description(),
-                adCreateDto.price(),
+                adDto.getTitle(),
+                AdType.fromDisplayName(adDto.getFormatedAdType()),
+                adDto.getDescription(),
+                adDto.getPrice(),
                 user,
-                adCreateDto.isPromoted(),
-                LocalDateTime.now().plusHours(adCreateDto.promotedUntil()),
+                adDto.isPromoted(),
+                LocalDateTime.now().plusHours(adDto.getPromotedUntilInHours()),
                 LocalDateTime.now()
         );
         adRepository.save(ad);
@@ -68,10 +68,10 @@ public class AdService {
     public AdDto updateAd(Long id, AdDto adDto) {
         Ad ad = adRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Объявление не найдено."));
-        updateIfNotNullOrEmpty(adDto.title(), ad::setTitle);
-        updateIfNotNullOrEmpty(adDto.formatedAdType(), adType -> ad.setAdType(AdType.fromDisplayName(adType)));
-        updateIfNotNullOrEmpty(adDto.description(), ad::setDescription);
-        updateIfNotNullOrEmpty(adDto.price(), ad::setPrice);
+        updateIfNotNullOrEmpty(adDto.getTitle(), ad::setTitle);
+        updateIfNotNullOrEmpty(adDto.getFormatedAdType(), adType -> ad.setAdType(AdType.fromDisplayName(adType)));
+        updateIfNotNullOrEmpty(adDto.getDescription(), ad::setDescription);
+        updateIfNotNullOrEmpty(adDto.getPrice(), ad::setPrice);
         adRepository.save(ad);
         return adMapper.toDto(ad);
     }
