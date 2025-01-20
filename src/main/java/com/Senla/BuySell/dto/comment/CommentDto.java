@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 @JsonPropertyOrder({
         "id",
-        "userId",
+        "adId",
+        "senderId",
         "nickname",
         "content",
-        "adId",
 })
 
 public class CommentDto {
@@ -20,7 +20,7 @@ public class CommentDto {
     private String content;
 
     @JsonView(Views.Summary.class)
-    private Long userId;
+    private Long senderId;
 
     @JsonView(Views.Summary.class)
     private String nickname;
@@ -49,11 +49,11 @@ public class CommentDto {
     }
 
     public Long getUserId() {
-        return userId;
+        return senderId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserId(Long senderId) {
+        this.senderId = senderId;
     }
 
     public String getNickname() {

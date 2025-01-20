@@ -7,6 +7,7 @@ import com.Senla.BuySell.model.User;
 import com.Senla.BuySell.repository.AdRepository;
 import com.Senla.BuySell.repository.CommentRepository;
 import com.Senla.BuySell.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void sendComment(CommentDto commentDto, Long adId, Long userId) {
         Ad ad = adRepository.findById(adId)
                 .orElseThrow(() -> new NoSuchElementException("Не удалось найти объявление."));

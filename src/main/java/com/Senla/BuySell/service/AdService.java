@@ -7,6 +7,7 @@ import com.Senla.BuySell.model.Ad;
 import com.Senla.BuySell.model.User;
 import com.Senla.BuySell.repository.AdRepository;
 import com.Senla.BuySell.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -40,23 +41,25 @@ public class AdService {
                 .orElseThrow(() -> new NoSuchElementException("Объявление с таким ID не найдено."));
     }
 
+    @Transactional
     public AdDto createAd(AdDto adDto) {
-        User user = userRepository.findById(adDto.getOwnerId())
+        User seller = userRepository.findById(adDto.getSellerId())
                 .orElseThrow(() -> new NoSuchElementException("Пользователь не найден."));
         Ad ad = new Ad(
                 adDto.getTitle(),
                 AdType.fromDisplayName(adDto.getFormatedAdType()),
                 adDto.getDescription(),
                 adDto.getPrice(),
-                user,
+                adDto.getLocation(),
+                seller,
                 adDto.isPromoted(),
-                LocalDateTime.now().plusHours(adDto.getPromotedUntilInHours()),
-                LocalDateTime.now()
+                LocalDateTime.now().plusHours(adDto.getPromotedUntilInHours())
         );
         adRepository.save(ad);
         return adMapper.toDto(ad);
     }
 
+    @Transactional
     public void promoteAd(Long adId, long hours) {
         Ad ad = adRepository.findById(adId)
                 .orElseThrow(() -> new NoSuchElementException("Объявление не найдено."));
@@ -65,6 +68,7 @@ public class AdService {
         adRepository.save(ad);
     }
 
+    @Transactional
     public AdDto updateAd(Long id, AdDto adDto) {
         Ad ad = adRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Объявление не найдено."));
@@ -76,6 +80,7 @@ public class AdService {
         return adMapper.toDto(ad);
     }
 
+    @Transactional
     public void deleteAd(Long id) {
         if (!adRepository.existsById(id)) {
             throw new NoSuchElementException("Объявление с таким ID не найдено.");

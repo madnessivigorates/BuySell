@@ -72,8 +72,6 @@ public class UserService implements UserDetailsService {
 
         Review review = new Review(sender, receiver, rating, comment);
         reviewRepository.save(review);
-
-        updateUserRating(receiver);
     }
 
     @Transactional
@@ -115,17 +113,6 @@ public class UserService implements UserDetailsService {
     private Role getRoleByName(String roleName) {
         return roleRepository.findByName(roleName)
                 .orElseThrow(() -> new IllegalStateException("Роль не найдена."));
-    }
-
-    private void updateUserRating(User receiver) {
-        List<Review> reviews = reviewRepository.findByReceiver(receiver);
-        double averageRating = reviews.stream()
-                .mapToInt(Review::getRating)
-                .average()
-                .orElse(0.0);
-
-        receiver.setRating(averageRating);
-        userRepository.save(receiver);
     }
 
     private <T> void updateIfNotNullOrEmpty(T value, Consumer<T> setter) {

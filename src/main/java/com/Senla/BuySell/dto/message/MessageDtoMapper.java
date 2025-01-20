@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MessageDtoMapper {
     @Mapping(source = "sender.nickname", target = "senderNickname")
+    @Mapping(source = "sender.id", target = "senderId")
     MessageDto toDto(Message message);
 
     Message toEntity(MessageDto messageDto);

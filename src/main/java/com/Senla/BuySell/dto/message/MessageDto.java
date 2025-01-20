@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import java.time.LocalDateTime;
 @JsonPropertyOrder({
         "id",
+        "senderId",
         "senderNickname",
         "content",
         "sentAt",
@@ -15,6 +16,9 @@ import java.time.LocalDateTime;
 public class MessageDto {
     @JsonView(Views.Summary.class)
     private Long id;
+
+    @JsonView(Views.Summary.class)
+    private Long senderId;
 
     @JsonView(Views.Summary.class)
     private String senderNickname;
@@ -27,6 +31,14 @@ public class MessageDto {
 
     public MessageDto(String content) {
         this.content = content;
+    }
+
+    public Long getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
     }
 
     public Long getId() {

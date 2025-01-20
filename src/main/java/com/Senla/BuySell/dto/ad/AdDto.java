@@ -1,8 +1,6 @@
 package com.Senla.BuySell.dto.ad;
 import com.Senla.BuySell.dto.comment.CommentDto;
 import com.Senla.BuySell.dto.views.Views;
-import com.Senla.BuySell.enums.AdType;
-import com.Senla.BuySell.model.User;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -11,14 +9,15 @@ import java.util.List;
 
 @JsonPropertyOrder({
         "id",
+        "sellerId",
+        "promoted",
+        "promotedUntilInHours",
         "title",
         "formatedAdType",
         "description",
         "price",
-        "ownerId",
+        "location",
         "createdAt",
-        "promoted",
-        "promotedUntilInHours",
         "commentList"
 })
 public class AdDto {
@@ -38,30 +37,36 @@ public class AdDto {
     private double price;
 
     @JsonView(Views.Summary.class)
-    private Long ownerId;
+    private String location;
+
+    @JsonView(Views.Summary.class)
+    private Long sellerId;
 
     @JsonView(Views.Summary.class)
     private LocalDateTime createdAt;
 
     @JsonView(Views.AdPersonal.class)
-    private boolean isPromoted;
+    private boolean isPromoted = false;
 
     @JsonView(Views.AdPersonal.class)
-    private Long promotedUntilInHours;
+    private Long promotedUntilInHours = null;
 
     @JsonView(Views.AdDetailed.class)
     private List<CommentDto> commentList;
 
-    public AdDto(String title, String formatedAdType, String description, double price,
-              Long ownerId, boolean isPromoted, Long promotedUntilInHours, LocalDateTime createdAt ) {
+    public AdDto() {
+    }
+
+    public AdDto(String title, String formatedAdType, String description, double price,String location,
+                 Long sellerId, boolean isPromoted, Long promotedUntilInHours) {
+        this.sellerId = sellerId;
+        this.isPromoted = isPromoted;
+        this.promotedUntilInHours = promotedUntilInHours;
         this.title = title;
         this.formatedAdType = formatedAdType;
         this.description = description;
         this.price = price;
-        this.ownerId = ownerId;
-        this.isPromoted = isPromoted;
-        this.promotedUntilInHours = promotedUntilInHours;
-        this.createdAt = createdAt;
+        this.location = location;
     }
 
     public Long getId() {
@@ -104,12 +109,20 @@ public class AdDto {
         this.price = price;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public String getLocation() {
+        return location;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
     }
 
     public LocalDateTime getCreatedAt() {

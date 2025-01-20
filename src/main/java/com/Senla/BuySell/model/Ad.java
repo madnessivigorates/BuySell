@@ -2,7 +2,6 @@ package com.Senla.BuySell.model;
 
 import com.Senla.BuySell.enums.AdType;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,9 +26,12 @@ public class Ad {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "location", nullable = false)
+    private String location;
+
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
-    private User user;
+    private User seller;
 
     @Column(name = "is_promoted", nullable = false)
     private boolean isPromoted;
@@ -46,16 +48,17 @@ public class Ad {
     public Ad() {
     }
 
-    public Ad(String title, AdType adType, String description, double price,
-              User user, boolean isPromoted, LocalDateTime promotedUntil, LocalDateTime createdAt ) {
+    public Ad(String title, AdType adType, String description, double price, String location,
+              User seller, boolean isPromoted, LocalDateTime promotedUntil ) {
         this.title = title;
         this.adType = adType;
         this.description = description;
         this.price = price;
-        this.user = user;
+        this.location = location;
+        this.seller = seller;
         this.isPromoted = isPromoted;
         this.promotedUntil = promotedUntil;
-        this.createdAt = createdAt;
+        this.createdAt = LocalDateTime.now();
     }
 
     public LocalDateTime getPromotedUntil() {
@@ -122,12 +125,20 @@ public class Ad {
         this.price = price;
     }
 
-    public User getUser() {
-        return user;
+    public String getLocation() {
+        return location;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public User getSeller() {
+        return seller;
+    }
+
+    public void setSeller(User seller) {
+        this.seller = seller;
     }
 
     public List<Comment> getCommentList() {

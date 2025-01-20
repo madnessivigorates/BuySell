@@ -31,8 +31,6 @@ public class User {
     @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)
     private List<Ad> adList;
 
-    private double rating;
-
     public User() {
     }
 
@@ -56,14 +54,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
     }
 
     public String getNickname() {

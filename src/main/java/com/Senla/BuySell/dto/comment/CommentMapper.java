@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
-    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.id", target = "senderId")
     @Mapping(source = "user.nickname", target = "nickname")
     @Mapping(source = "ad.id", target = "adId")
     CommentDto toDto(Comment comment);

@@ -10,8 +10,8 @@ import java.util.List;
         "nickname",
         "username",
         "password",
-        "rating",
         "adList",
+        "rating"
 })
 
 public class UserDto {
@@ -27,11 +27,14 @@ public class UserDto {
     @JsonView(Views.UserPersonal.class)
     private String password;
 
+    @JsonView(Views.UserDetailed.class)
+    private List<AdDto> adList;
+
     @JsonView(Views.Summary.class)
     private double rating;
 
-    @JsonView(Views.UserDetailed.class)
-    private List<AdDto> adList;
+    public UserDto() {
+    }
 
     public UserDto(String nickname, String username, String password) {
         this.nickname = nickname;

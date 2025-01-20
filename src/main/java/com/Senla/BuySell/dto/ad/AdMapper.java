@@ -3,7 +3,6 @@ package com.Senla.BuySell.dto.ad;
 import com.Senla.BuySell.dto.comment.CommentMapper;
 import com.Senla.BuySell.enums.AdType;
 import com.Senla.BuySell.model.Ad;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {CommentMapper.class})
 public interface AdMapper {
-    @Mapping(source = "user.id", target = "ownerId")
+    @Mapping(source = "seller.id", target = "sellerId")
     @Mapping(source = "adType", target = "formatedAdType",qualifiedByName = "formatAdType")
     AdDto toDto(Ad ad);
 
