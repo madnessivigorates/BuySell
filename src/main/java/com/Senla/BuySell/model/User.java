@@ -28,7 +28,7 @@ public class User {
     @OneToMany(mappedBy = "receiver", fetch = FetchType.EAGER)
     private List<Review> reviewList;
 
-    @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "seller", fetch = FetchType.EAGER)
     private List<Ad> adList;
 
     public User() {

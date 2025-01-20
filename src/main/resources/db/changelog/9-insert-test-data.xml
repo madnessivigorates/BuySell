@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="8-roles" author="mathew">
+    <changeSet id="9-roles" author="mathew">
         <insert tableName="roles">
             <column name="id" value="1"/>
             <column name="name" value="ROLE_USER"/>
@@ -17,7 +17,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="8-users" author="mathew">
+    <changeSet id="9-users" author="mathew">
         <insert tableName="users">
             <column name="id" value="1"/>
             <column name="username" value="seller52"/>
@@ -32,13 +32,14 @@
         </insert>
     </changeSet>
 
-    <changeSet id="8-ads" author="mathew">
+    <changeSet id="9-ads" author="mathew">
         <insert tableName="ads">
             <column name="id" value="1"/>
             <column name="title" value="MTB велосипед"/>
             <column name="ad_type" value="TRANSPORT"/>
             <column name="description" value="Горный велосипед."/>
             <column name="price" value="150.00"/>
+            <column name="location" value="Нижний Новгород"/>
             <column name="seller_id" value="1"/>
             <column name="is_promoted" value="0"/>
             <column name="promoted_until" value="NULL"/>
@@ -50,7 +51,8 @@
             <column name="ad_type" value="ELECTRONICS"/>
             <column name="description" value="Мощный ноутбук, идеально подходящий для игр и работы."/>
             <column name="price" value="750.00"/>
-            <column name="seller_id" value="1"/>
+            <column name="location" value="Москва"/>
+            <column name="seller_id" value="2"/>
             <column name="is_promoted" value="1"/>
             <column name="promoted_until" value="2025-01-10T12:00:00"/>
             <column name="created_at" value="2025-01-08T14:30:00"/>
@@ -58,7 +60,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="8-comments" author="mathew">
+    <changeSet id="9-comments" author="mathew">
         <insert tableName="comments">
             <column name="id" value="1"/>
             <column name="content" value="Сколько скоростей?"/>
@@ -67,7 +69,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="8-messages" author="mathew">
+    <changeSet id="9-messages" author="mathew">
         <insert tableName="messages">
             <column name="id" value="1"/>
             <column name="sender_id" value="2"/>
@@ -77,7 +79,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="8-users_roles" author="mathew">
+    <changeSet id="9-users_roles" author="mathew">
         <insert tableName="users_roles">
             <column name="userId" value="1"/>
             <column name="roleId" value="1"/>
@@ -89,7 +91,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="8-reviews" author="mathew">
+    <changeSet id="9-reviews" author="mathew">
         <insert tableName="reviews">
             <column name="receiver_id" value="1"/>
             <column name="sender_id" value="2"/>
@@ -107,6 +109,44 @@
             <column name="sender_id" value="1"/>
             <column name="rating" value="3"/>
             <column name="comment" value="долго отправлял"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="9-removed_ads" author="Mathew">
+        <insert tableName="removed_ads">
+            <column name="id" value="1"/>
+            <column name="title" value="Ноутбук б/у"/>
+            <column name="ad_type" value="ELECTRONICS"/>
+            <column name="description" value="Хорошо сохранившийся ноутбук в отличном состоянии."/>
+            <column name="price" value="500.00"/>
+            <column name="location" value="Москва"/>
+            <column name="seller_id" value="1"/>
+            <column name="reason" value="SOLDOUT"/>
+            <column name="removed_at" value="2025-01-01T10:00:00"/>
+        </insert>
+
+        <insert tableName="removed_ads">
+            <column name="id" value="2"/>
+            <column name="title" value="Горный велосипед"/>
+            <column name="ad_type" value="TRANSPORT"/>
+            <column name="description" value="Надежный горный велосипед, использовался мало."/>
+            <column name="price" value="200.00"/>
+            <column name="location" value="Сочи"/>
+            <column name="seller_id" value="1"/>
+            <column name="reason" value="OTHER"/>
+            <column name="removed_at" value="2025-01-05T15:30:00"/>
+        </insert>
+
+        <insert tableName="removed_ads">
+            <column name="id" value="3"/>
+            <column name="title" value="Обеденный стол"/>
+            <column name="ad_type" value="FURNITURE"/>
+            <column name="description" value="Современный обеденный стол, удобно помещаются 6 человек."/>
+            <column name="price" value="300.00"/>
+            <column name="location" value="Санкт-Петербург"/>
+            <column name="seller_id" value="2"/>
+            <column name="reason" value="RECONSIDER"/>
+            <column name="removed_at" value="2025-01-10T18:45:00"/>
         </insert>
     </changeSet>
 

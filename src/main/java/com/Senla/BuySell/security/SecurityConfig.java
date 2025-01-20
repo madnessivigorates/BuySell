@@ -45,6 +45,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/register").permitAll()
                                 .requestMatchers("/api/ads/get/{id}").permitAll()
                                 .requestMatchers("/api/ads/all").permitAll()
+                                .requestMatchers("/api/ads/history/{userId}").permitAll()
                                 .requestMatchers("/api/users/get/{id}").permitAll()
                                 .requestMatchers("/api/users/all").permitAll()
                                 .anyRequest().authenticated())

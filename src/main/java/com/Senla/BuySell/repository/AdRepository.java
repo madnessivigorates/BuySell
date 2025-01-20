@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface AdRepository extends JpaRepository<Ad,Long> {
-    @Query("SELECT a FROM Ad a JOIN a.user u " +
-            "LEFT JOIN Review r ON r.receiver.id = u.id " +
+    @Query("SELECT a FROM Ad a JOIN a.seller s " +
+            "LEFT JOIN Review r ON r.receiver.id = s.id " +
             "WHERE (:adType IS NULL OR a.adType = :adType) " +
             "AND (:keyword IS NULL OR LOWER(a.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(a.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +

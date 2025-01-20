@@ -1,8 +1,6 @@
 package com.Senla.BuySell.dto.removedAd;
 
 import com.Senla.BuySell.dto.views.Views;
-import com.Senla.BuySell.enums.AdType;
-import com.Senla.BuySell.enums.ReasonsForSale;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -11,14 +9,13 @@ import java.time.LocalDateTime;
 @JsonPropertyOrder({
         "id",
         "sellerId",
-        "promoted",
-        "promotedUntilInHours",
         "title",
         "formatedAdType",
         "description",
         "price",
         "location",
-        "soldAt",
+        "formatReasonForSale",
+        "removedAt",
 })
 
 public class RemovedAdDto {
@@ -29,7 +26,7 @@ public class RemovedAdDto {
     private String title;
 
     @JsonView(Views.Summary.class)
-    private AdType adType;
+    private String formatedAdType;
 
     @JsonView(Views.Summary.class)
     private String description;
@@ -44,16 +41,16 @@ public class RemovedAdDto {
     private Long sellerId;
 
     @JsonView(Views.Summary.class)
-    private ReasonsForSale reason;
+    private String formatReasonForSale;
 
     @JsonView(Views.Summary.class)
-    private LocalDateTime soldAt;
+    private LocalDateTime removedAt;
 
     public RemovedAdDto() {
     }
 
-    public RemovedAdDto(ReasonsForSale reason) {
-        this.reason = reason;
+    public RemovedAdDto(String formatReasonForSale) {
+        this.formatReasonForSale = formatReasonForSale;
     }
 
     public Long getId() {
@@ -72,12 +69,12 @@ public class RemovedAdDto {
         this.title = title;
     }
 
-    public AdType getAdType() {
-        return adType;
+    public String getFormatedAdType() {
+        return formatedAdType;
     }
 
-    public void setAdType(AdType adType) {
-        this.adType = adType;
+    public void setFormatedAdType(String formatedAdType) {
+        this.formatedAdType = formatedAdType;
     }
 
     public String getDescription() {
@@ -112,19 +109,19 @@ public class RemovedAdDto {
         this.sellerId = sellerId;
     }
 
-    public ReasonsForSale getReason() {
-        return reason;
+    public String getFormatReasonForSale() {
+        return formatReasonForSale;
     }
 
-    public void setReason(ReasonsForSale reason) {
-        this.reason = reason;
+    public void setFormatReasonForSale(String formatReasonForSale) {
+        this.formatReasonForSale = formatReasonForSale;
     }
 
-    public LocalDateTime getSoldAt() {
-        return soldAt;
+    public LocalDateTime getRemovedAt() {
+        return removedAt;
     }
 
-    public void setSoldAt(LocalDateTime soldAt) {
-        this.soldAt = soldAt;
+    public void setRemovedAt(LocalDateTime removedAt) {
+        this.removedAt = removedAt;
     }
 }

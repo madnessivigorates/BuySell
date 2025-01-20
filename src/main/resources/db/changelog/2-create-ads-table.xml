@@ -11,16 +11,19 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="title" type="VARCHAR(255)">
+            <column name="title" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="ad_type" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="TEXT">
+            <column name="description" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="price" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="seller_id" type="BIGINT">

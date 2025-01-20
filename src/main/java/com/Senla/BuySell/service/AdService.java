@@ -2,10 +2,15 @@ package com.Senla.BuySell.service;
 
 import com.Senla.BuySell.dto.ad.AdDto;
 import com.Senla.BuySell.dto.ad.AdMapper;
+import com.Senla.BuySell.dto.removedAd.RemovedAdDto;
+import com.Senla.BuySell.dto.removedAd.RemovedAdDtoMapper;
 import com.Senla.BuySell.enums.AdType;
+import com.Senla.BuySell.enums.ReasonsForSale;
 import com.Senla.BuySell.model.Ad;
+import com.Senla.BuySell.model.RemovedAd;
 import com.Senla.BuySell.model.User;
 import com.Senla.BuySell.repository.AdRepository;
+import com.Senla.BuySell.repository.RemovedAdRepository;
 import com.Senla.BuySell.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +27,36 @@ public class AdService {
     private final AdRepository adRepository;
     private final AdMapper adMapper;
     private final UserRepository userRepository;
+    private final RemovedAdRepository removedAdRepository;
+    private final RemovedAdDtoMapper removedAdDtoMapper;
 
     @Autowired
-    public AdService(AdRepository adRepository, AdMapper adMapper, UserRepository userRepository) {
+    public AdService(AdRepository adRepository, AdMapper adMapper, UserRepository userRepository,
+                     RemovedAdRepository removedAdRepository,RemovedAdDtoMapper removedAdDtoMapper) {
         this.adRepository = adRepository;
         this.adMapper = adMapper;
         this.userRepository = userRepository;
+        this.removedAdRepository = removedAdRepository;
+        this.removedAdDtoMapper = removedAdDtoMapper;
     }
 
-    public List<AdDto> getAllAds(AdType adType, String keyword) {
-        List<Ad> ads = adRepository.findAllByAdTypeAndKeyword(adType, keyword);
-        return adMapper.toDtoList(ads);
+    public List<AdDto> getAllAds(String adType, String keyword) {
+        AdType type = null;
+        if (adType != null && !adType.isEmpty()) {
+            type = AdType.fromDisplayName(adType);
+        }
+        return adMapper.toDtoList(adRepository.findAllByAdTypeAndKeyword(type, keyword));
     }
+
 
     public AdDto getAdById(Long id) {
         return adRepository.findById(id)
                 .map(adMapper::toDto)
                 .orElseThrow(() -> new NoSuchElementException("Объявление с таким ID не найдено."));
+    }
+
+    public List<RemovedAdDto> getUserAdsHistory(Long sellerId){
+        return removedAdDtoMapper.toDtoList(removedAdRepository.findBySellerId(sellerId));
     }
 
     @Transactional
@@ -81,10 +99,19 @@ public class AdService {
     }
 
     @Transactional
-    public void deleteAd(Long id) {
-        if (!adRepository.existsById(id)) {
-            throw new NoSuchElementException("Объявление с таким ID не найдено.");
-        }
+    public void removeAd(RemovedAdDto removedAdDto, Long id) {
+        Ad ad = adRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Объявление с таким ID не найдено."));
+        RemovedAd removedAd = new RemovedAd(
+                ad.getTitle(),
+                ad.getAdType(),
+                ad.getDescription(),
+                ad.getPrice(),
+                ad.getLocation(),
+                ad.getSeller(),
+                ReasonsForSale.fromDisplayName(removedAdDto.getFormatReasonForSale())
+        );
+        removedAdRepository.save(removedAd);
         adRepository.deleteById(id);
     }
 

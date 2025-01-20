@@ -37,8 +37,8 @@ public class RemovedAd {
     @Enumerated(EnumType.STRING)
     private ReasonsForSale reason;
 
-    @Column(name = "sold_at", nullable = false)
-    private LocalDateTime soldAt;
+    @Column(name = "removed_at", nullable = false)
+    private LocalDateTime removedAt;
 
     public RemovedAd() {
     }
@@ -52,7 +52,7 @@ public class RemovedAd {
         this.location = location;
         this.seller = seller;
         this.reason = reason;
-        this.soldAt = LocalDateTime.now();
+        this.removedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -119,11 +119,11 @@ public class RemovedAd {
         this.reason = reason;
     }
 
-    public LocalDateTime getSoldAt() {
-        return soldAt;
+    public LocalDateTime getRemovedAt() {
+        return removedAt;
     }
 
-    public void setSoldAt(LocalDateTime soldAt) {
-        this.soldAt = soldAt;
+    public void setRemovedAt(LocalDateTime removedAt) {
+        this.removedAt = removedAt;
     }
 }

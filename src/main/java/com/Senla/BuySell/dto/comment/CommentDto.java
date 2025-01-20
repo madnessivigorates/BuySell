@@ -48,11 +48,11 @@ public class CommentDto {
         this.content = content;
     }
 
-    public Long getUserId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setUserId(Long senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
 

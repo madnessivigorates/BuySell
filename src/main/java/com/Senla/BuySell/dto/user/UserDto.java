@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import java.util.List;
 @JsonPropertyOrder({
         "id",
+        "rating",
         "nickname",
         "username",
         "password",
-        "adList",
-        "rating"
+        "adList"
 })
 
 public class UserDto {

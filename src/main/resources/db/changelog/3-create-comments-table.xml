@@ -11,7 +11,7 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="content" type="TEXT">
+            <column name="content" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="user_id" type="BIGINT">

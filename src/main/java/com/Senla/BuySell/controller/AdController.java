@@ -1,8 +1,10 @@
 package com.Senla.BuySell.controller;
 
 import com.Senla.BuySell.dto.ad.AdDto;
+import com.Senla.BuySell.dto.removedAd.RemovedAdDto;
 import com.Senla.BuySell.dto.views.Views;
 import com.Senla.BuySell.enums.AdType;
+import com.Senla.BuySell.enums.ReasonsForSale;
 import com.Senla.BuySell.service.AdService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,7 @@ public class AdController {
     @JsonView(Views.Summary.class)
     public List<AdDto> getAllAds(@RequestParam(value = "adType", required = false) String adType,
                                  @RequestParam(value = "keyword", required = false) String keyword) {
-        AdType type = null;
-        if (adType != null && !adType.isEmpty()) {
-            type = AdType.fromDisplayName(adType);
-        }
-        return adService.getAllAds(type, keyword);
+        return adService.getAllAds(adType, keyword);
     }
 
     @GetMapping("/get/{id}")
@@ -47,6 +45,12 @@ public class AdController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/history/{sellerId}")
+    @JsonView({Views.Summary.class})
+    public List<RemovedAdDto> getUserAdsHistory(@PathVariable Long sellerId){
+        return adService.getUserAdsHistory(sellerId);
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -72,8 +76,8 @@ public class AdController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<Void> deleteAd(@PathVariable Long id) {
-        adService.deleteAd(id);
+    public ResponseEntity<Void> deleteAd(@PathVariable Long id, @RequestBody RemovedAdDto removedAdDto) {
+        adService.removeAd(removedAdDto, id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
