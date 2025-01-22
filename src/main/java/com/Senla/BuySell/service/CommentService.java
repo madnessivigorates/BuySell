@@ -4,40 +4,30 @@ import com.Senla.BuySell.dto.comment.CommentDto;
 import com.Senla.BuySell.model.Ad;
 import com.Senla.BuySell.model.Comment;
 import com.Senla.BuySell.model.User;
-import com.Senla.BuySell.repository.AdRepository;
 import com.Senla.BuySell.repository.CommentRepository;
-import com.Senla.BuySell.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
 
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final AdRepository adRepository;
-    private final UserRepository userRepository;
+    private final AdService adService;
+    private final UserService userService;
 
-    @Autowired
-    public CommentService(CommentRepository commentRepository, AdRepository adRepository, UserRepository userRepository) {
+    public CommentService(CommentRepository commentRepository, AdService adService, UserService userService) {
         this.commentRepository = commentRepository;
-        this.adRepository = adRepository;
-        this.userRepository = userRepository;
+        this.adService = adService;
+        this.userService = userService;
     }
 
     @Transactional
-    public void sendComment(CommentDto commentDto, Long adId, Long userId) {
-        Ad ad = adRepository.findById(adId)
-                .orElseThrow(() -> new NoSuchElementException("Не удалось найти объявление."));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("Не удалось найти пользователя."));
-        Comment comment = new Comment(commentDto.getContent(),user,ad);
-        try {
-            commentRepository.save(comment);
-        } catch (Exception e) {
-            throw new RuntimeException("Ошибка отправки сообщения. " + e.getMessage());
-        }
-    }
+    public void sendComment(CommentDto commentDto, Long adId) {
+        Long senderId = userService.getCurrentUserId();
+        Ad ad = adService.findAdById(adId);
+        User user = userService.findUserById(senderId, "Пользователь не найден.");
+        Comment comment = new Comment(commentDto.getContent(), user, ad);
 
+        commentRepository.save(comment);
+    }
 }
+

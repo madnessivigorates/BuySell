@@ -9,5 +9,8 @@ public class Views {
     public static class AdDetailed extends Summary {}
     public static class AdPersonal extends UserDetailed {}
 
+    public static class Admin extends Summary {}
+
+
 
 }

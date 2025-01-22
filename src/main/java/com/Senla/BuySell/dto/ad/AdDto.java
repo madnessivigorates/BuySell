@@ -10,6 +10,7 @@ import java.util.List;
 @JsonPropertyOrder({
         "id",
         "sellerId",
+        "sellerRating",
         "promoted",
         "promotedUntilInHours",
         "title",
@@ -41,6 +42,9 @@ public class AdDto {
 
     @JsonView(Views.Summary.class)
     private Long sellerId;
+
+    @JsonView(Views.Summary.class)
+    private double sellerRating;
 
     @JsonView(Views.Summary.class)
     private LocalDateTime createdAt;
@@ -123,6 +127,14 @@ public class AdDto {
 
     public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
+    }
+
+    public double getSellerRating() {
+        return sellerRating;
+    }
+
+    public void setSellerRating(double sellerRating) {
+        this.sellerRating = sellerRating;
     }
 
     public LocalDateTime getCreatedAt() {

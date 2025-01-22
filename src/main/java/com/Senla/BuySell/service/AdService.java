@@ -6,17 +6,18 @@ import com.Senla.BuySell.dto.removedAd.RemovedAdDto;
 import com.Senla.BuySell.dto.removedAd.RemovedAdDtoMapper;
 import com.Senla.BuySell.enums.AdType;
 import com.Senla.BuySell.enums.ReasonsForSale;
+import com.Senla.BuySell.exceptions.OwnershipException;
 import com.Senla.BuySell.model.Ad;
 import com.Senla.BuySell.model.RemovedAd;
 import com.Senla.BuySell.model.User;
 import com.Senla.BuySell.repository.AdRepository;
 import com.Senla.BuySell.repository.RemovedAdRepository;
-import com.Senla.BuySell.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -26,33 +27,33 @@ import java.util.function.Consumer;
 public class AdService {
     private final AdRepository adRepository;
     private final AdMapper adMapper;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final RemovedAdRepository removedAdRepository;
     private final RemovedAdDtoMapper removedAdDtoMapper;
 
     @Autowired
-    public AdService(AdRepository adRepository, AdMapper adMapper, UserRepository userRepository,
-                     RemovedAdRepository removedAdRepository,RemovedAdDtoMapper removedAdDtoMapper) {
+    public AdService(
+            AdRepository adRepository,
+            AdMapper adMapper,
+            UserService userService,
+            RemovedAdRepository removedAdRepository,
+            RemovedAdDtoMapper removedAdDtoMapper
+    ) {
         this.adRepository = adRepository;
         this.adMapper = adMapper;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.removedAdRepository = removedAdRepository;
         this.removedAdDtoMapper = removedAdDtoMapper;
     }
 
     public List<AdDto> getAllAds(String adType, String keyword) {
-        AdType type = null;
-        if (adType != null && !adType.isEmpty()) {
-            type = AdType.fromDisplayName(adType);
-        }
+        AdType type = (adType != null && !adType.isEmpty()) ? AdType.fromDisplayName(adType) : null;
         return adMapper.toDtoList(adRepository.findAllByAdTypeAndKeyword(type, keyword));
     }
 
 
     public AdDto getAdById(Long id) {
-        return adRepository.findById(id)
-                .map(adMapper::toDto)
-                .orElseThrow(() -> new NoSuchElementException("Объявление с таким ID не найдено."));
+        return adMapper.toDto(findAdById(id));
     }
 
     public List<RemovedAdDto> getUserAdsHistory(Long sellerId){
@@ -61,8 +62,9 @@ public class AdService {
 
     @Transactional
     public AdDto createAd(AdDto adDto) {
-        User seller = userRepository.findById(adDto.getSellerId())
-                .orElseThrow(() -> new NoSuchElementException("Пользователь не найден."));
+        User seller = userService.findUserById(adDto.getSellerId(), "Пользователь не найден.");
+        LocalDateTime promotedUntilInHours = LocalDateTime.now().plusHours(adDto.getPromotedUntilInHours());
+        if(!adDto.isPromoted()){promotedUntilInHours = null;}
         Ad ad = new Ad(
                 adDto.getTitle(),
                 AdType.fromDisplayName(adDto.getFormatedAdType()),
@@ -71,7 +73,7 @@ public class AdService {
                 adDto.getLocation(),
                 seller,
                 adDto.isPromoted(),
-                LocalDateTime.now().plusHours(adDto.getPromotedUntilInHours())
+                promotedUntilInHours
         );
         adRepository.save(ad);
         return adMapper.toDto(ad);
@@ -79,8 +81,8 @@ public class AdService {
 
     @Transactional
     public void promoteAd(Long adId, long hours) {
-        Ad ad = adRepository.findById(adId)
-                .orElseThrow(() -> new NoSuchElementException("Объявление не найдено."));
+        Ad ad = findAdById(adId);
+        checkOwnership(ad);
         ad.setPromoted(true);
         ad.setPromotedUntil(LocalDateTime.now().plusHours(hours));
         adRepository.save(ad);
@@ -88,8 +90,8 @@ public class AdService {
 
     @Transactional
     public AdDto updateAd(Long id, AdDto adDto) {
-        Ad ad = adRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Объявление не найдено."));
+        Ad ad = findAdById(id);
+        checkOwnership(ad);
         updateIfNotNullOrEmpty(adDto.getTitle(), ad::setTitle);
         updateIfNotNullOrEmpty(adDto.getFormatedAdType(), adType -> ad.setAdType(AdType.fromDisplayName(adType)));
         updateIfNotNullOrEmpty(adDto.getDescription(), ad::setDescription);
@@ -100,8 +102,8 @@ public class AdService {
 
     @Transactional
     public void removeAd(RemovedAdDto removedAdDto, Long id) {
-        Ad ad = adRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Объявление с таким ID не найдено."));
+        Ad ad = findAdById(id);
+        checkOwnership(ad);
         RemovedAd removedAd = new RemovedAd(
                 ad.getTitle(),
                 ad.getAdType(),
@@ -124,6 +126,18 @@ public class AdService {
                 ad.setPromotedUntil(null);
                 adRepository.save(ad);
             }
+        }
+    }
+
+    public Ad findAdById(Long id) {
+        return adRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Объявление с ID " + id + " не найдено."));
+    }
+
+    private void checkOwnership(Ad ad) {
+        Long currentUserId = userService.getCurrentUserId();
+        if (!ad.getSeller().getId().equals(currentUserId)) {
+            throw new OwnershipException("Это не ваше объявление");
         }
     }
 

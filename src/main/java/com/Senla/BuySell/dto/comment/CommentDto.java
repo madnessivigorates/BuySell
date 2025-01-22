@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonView;
         "id",
         "adId",
         "senderId",
-        "nickname",
+        "senderNickname",
         "content",
 })
 
@@ -23,10 +23,13 @@ public class CommentDto {
     private Long senderId;
 
     @JsonView(Views.Summary.class)
-    private String nickname;
+    private String senderNickname;
 
     @JsonView(Views.Summary.class)
     private Long adId;
+
+    public CommentDto() {
+    }
 
     public CommentDto(String content) {
         this.content = content;
@@ -56,12 +59,12 @@ public class CommentDto {
         this.senderId = senderId;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getSenderNickname() {
+        return senderNickname;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setSenderNickname(String senderNickname) {
+        this.senderNickname = senderNickname;
     }
 
     public Long getAdId() {

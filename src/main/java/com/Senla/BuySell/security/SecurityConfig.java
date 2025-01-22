@@ -43,11 +43,13 @@ public class SecurityConfig {
                         authorize
                                 .requestMatchers("/api/auth").permitAll()
                                 .requestMatchers("/api/register").permitAll()
+                                .requestMatchers("/api/register/admin").permitAll()
                                 .requestMatchers("/api/ads/get/{id}").permitAll()
                                 .requestMatchers("/api/ads/all").permitAll()
                                 .requestMatchers("/api/ads/history/{userId}").permitAll()
                                 .requestMatchers("/api/users/get/{id}").permitAll()
                                 .requestMatchers("/api/users/all").permitAll()
+                                .requestMatchers("/api/reviews/{userId}").permitAll()
                                 .anyRequest().authenticated())
                 .exceptionHandling()
                 .accessDeniedHandler(customAccessDeniedHandler)

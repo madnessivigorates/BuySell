@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -33,33 +35,62 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest){
+    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.username(),authRequest.password()));
-        }catch (BadCredentialsException e){
-            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "Неправильный логин или пароль"), HttpStatus.UNAUTHORIZED);
+            authenticateUser(authRequest);
+            UserDetails userDetails = userService.loadUserByUsername(authRequest.username());
+            String token = jwtTokenUtils.generateToken(userDetails);
+            return ResponseEntity.ok(new JwtResponse(token));
+        } catch (BadCredentialsException e) {
+            return handleAuthenticationError(e);
         }
-        UserDetails userDetails = userService.loadUserByUsername(authRequest.username());
-        String token = jwtTokenUtils.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
         if (userService.existsByUsername(userDto.getUsername())) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с таким именем уже существует"),
-                    HttpStatus.BAD_REQUEST
-            );
+            return handleUserAlreadyExistsError();
         }
         try {
-            userService.registerNewUser(userDto);
-            return new ResponseEntity<>("Регистрация прошла успешно", HttpStatus.CREATED);
+            userService.registerNewUser(userDto,"ROLE_USER");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Регистрация прошла успешно");
         } catch (Exception e) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ошибка при регистрации пользователя: " + e.getMessage()),
-                    HttpStatus.INTERNAL_SERVER_ERROR
-            );
+            return handleRegistrationError(e);
         }
     }
+
+    @PostMapping("/register/admin")
+    public ResponseEntity<?> registerAdmin(@RequestBody UserDto userDto) {
+        if (userService.existsByUsername(userDto.getUsername())) {
+            return handleUserAlreadyExistsError();
+        }
+        try {
+            userService.registerNewUser(userDto,"ROLE_ADMIN");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Администратор успешно зарегистрирован");
+        } catch (Exception e) {
+            return handleRegistrationError(e);
+        }
+    }
+
+    private void authenticateUser(JwtRequest authRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.username(), authRequest.password())
+        );
+    }
+
+    private ResponseEntity<?> handleAuthenticationError(BadCredentialsException e) {
+        AppError appError = new AppError(HttpStatus.UNAUTHORIZED.value(), "Неправильный логин или пароль");
+        return new ResponseEntity<>(appError, HttpStatus.UNAUTHORIZED);
+    }
+
+    private ResponseEntity<?> handleUserAlreadyExistsError() {
+        AppError appError = new AppError(HttpStatus.BAD_REQUEST.value(), "Пользователь с таким именем уже существует");
+        return new ResponseEntity<>(appError, HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<?> handleRegistrationError(Exception e) {
+        AppError appError = new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ошибка при регистрации пользователя: " + e.getMessage());
+        return new ResponseEntity<>(appError, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
+

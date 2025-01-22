@@ -11,7 +11,7 @@ import java.util.List;
         "nickname",
         "username",
         "password",
-        "adList"
+        "ads"
 })
 
 public class UserDto {
@@ -28,7 +28,7 @@ public class UserDto {
     private String password;
 
     @JsonView(Views.UserDetailed.class)
-    private List<AdDto> adList;
+    private List<AdDto> ads;
 
     @JsonView(Views.Summary.class)
     private double rating;
@@ -82,11 +82,11 @@ public class UserDto {
         this.rating = rating;
     }
 
-    public List<AdDto> getAdList() {
-        return adList;
+    public List<AdDto> getAds() {
+        return ads;
     }
 
-    public void setAdList(List<AdDto> adList) {
-        this.adList = adList;
+    public void setAds(List<AdDto> ads) {
+        this.ads = ads;
     }
 }

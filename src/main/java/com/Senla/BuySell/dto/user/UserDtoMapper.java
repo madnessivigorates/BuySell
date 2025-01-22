@@ -12,20 +12,11 @@ import java.util.List;
 @Mapper(componentModel = "spring",uses = {AdMapper.class})
 public interface UserDtoMapper {
     @Mapping(source = "reviewList",target = "rating", qualifiedByName = "averageRating")
+    @Mapping(source = "adList",target = "ads")
     UserDto toDto(User user);
 
     User toEntity(UserDto userDto);
 
     List<UserDto> toDtoList(List<User> userList);
 
-    @Named("averageRating")
-    default double calculateAverageRating(List<Review> reviewList) {
-        if (reviewList == null || reviewList.isEmpty()) {
-            return 0.0;
-        }
-        return reviewList.stream()
-                .mapToInt(Review::getRating)
-                .average()
-                .orElse(0.0);
-    }
 }

@@ -3,8 +3,6 @@ package com.Senla.BuySell.controller;
 import com.Senla.BuySell.dto.ad.AdDto;
 import com.Senla.BuySell.dto.removedAd.RemovedAdDto;
 import com.Senla.BuySell.dto.views.Views;
-import com.Senla.BuySell.enums.AdType;
-import com.Senla.BuySell.enums.ReasonsForSale;
 import com.Senla.BuySell.service.AdService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 
 @RestController
 @RequestMapping("/api/ads")
@@ -29,33 +25,28 @@ public class AdController {
 
     @GetMapping("/all")
     @JsonView(Views.Summary.class)
-    public List<AdDto> getAllAds(@RequestParam(value = "adType", required = false) String adType,
-                                 @RequestParam(value = "keyword", required = false) String keyword) {
+    public List<AdDto> getAllAds(
+            @RequestParam(value = "adType", required = false) String adType,
+            @RequestParam(value = "keyword", required = false) String keyword
+    ) {
         return adService.getAllAds(adType, keyword);
     }
 
     @GetMapping("/get/{id}")
     @JsonView(Views.AdDetailed.class)
-    public ResponseEntity<?> getAd(@PathVariable Long id) {
-        try {
-            AdDto adDto = adService.getAdById(id);
-            return ResponseEntity.ok(adDto);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка: " + e.getMessage());
-        }
+    public AdDto getAd(@PathVariable Long id) {
+        return adService.getAdById(id);
     }
 
     @GetMapping("/history/{sellerId}")
-    @JsonView({Views.Summary.class})
-    public List<RemovedAdDto> getUserAdsHistory(@PathVariable Long sellerId){
+    @JsonView(Views.Summary.class)
+    public List<RemovedAdDto> getUserAdsHistory(@PathVariable Long sellerId) {
         return adService.getUserAdsHistory(sellerId);
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/promote/{id}")
-    public ResponseEntity<?> promoteAd(@PathVariable Long id, @RequestParam long hours) {
+    public ResponseEntity<String> promoteAd(@PathVariable Long id, @RequestParam long hours) {
         adService.promoteAd(id, hours);
         return ResponseEntity.ok("Вы успешно продвинули своё объявление!");
     }
@@ -63,23 +54,21 @@ public class AdController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<AdDto> createAd(@RequestBody AdDto adDto) {
-        AdDto createdAdd = adService.createAd(adDto);
-        return new ResponseEntity<>(createdAdd, HttpStatus.CREATED);
+        AdDto createdAd = adService.createAd(adDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAd);
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/edit/{id}")
-    public ResponseEntity<AdDto> updateAd(@PathVariable Long id, @RequestBody AdDto adDto) {
-        AdDto updatedAd = adService.updateAd(id, adDto);
-        return new ResponseEntity<>(updatedAd, HttpStatus.OK);
+    public AdDto updateAd(@PathVariable Long id, @RequestBody AdDto adDto) {
+        return adService.updateAd(id, adDto);
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<Void> deleteAd(@PathVariable Long id, @RequestBody RemovedAdDto removedAdDto) {
         adService.removeAd(removedAdDto, id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
-
-
 }
+

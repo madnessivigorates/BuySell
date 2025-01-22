@@ -64,7 +64,7 @@
         <insert tableName="comments">
             <column name="id" value="1"/>
             <column name="content" value="Сколько скоростей?"/>
-            <column name="user_id" value="2"/>
+            <column name="sender_id" value="2"/>
             <column name="ad_id" value="1"/>
         </insert>
     </changeSet>

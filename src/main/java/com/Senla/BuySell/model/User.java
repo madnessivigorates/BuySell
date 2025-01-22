@@ -23,7 +23,7 @@ public class User {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private List<Role> roles;
+    private List<Role> roleList;
 
     @OneToMany(mappedBy = "receiver", fetch = FetchType.EAGER)
     private List<Review> reviewList;
@@ -72,12 +72,12 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     public List<Review> getReviewList() {

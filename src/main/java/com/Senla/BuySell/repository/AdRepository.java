@@ -18,8 +18,9 @@ public interface AdRepository extends JpaRepository<Ad,Long> {
             "OR LOWER(a.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
             "AND (a.promotedUntil IS NULL OR a.promotedUntil > CURRENT_TIMESTAMP) " +
             "GROUP BY a.id " +
-            "ORDER BY COALESCE(AVG(r.rating), 0) DESC, a.isPromoted DESC, a.promotedUntil DESC")
+            "ORDER BY a.isPromoted DESC, COALESCE(AVG(r.rating), 0) DESC, a.promotedUntil DESC")
     List<Ad> findAllByAdTypeAndKeyword(@Param("adType") AdType adType,
                                        @Param("keyword") String keyword);
+
 
 }

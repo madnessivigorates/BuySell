@@ -13,8 +13,8 @@ public class Comment {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
 
     @ManyToOne
     @JoinColumn(name = "ad_id", nullable = false)
@@ -23,9 +23,9 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String content, User user, Ad ad) {
+    public Comment(String content, User sender, Ad ad) {
         this.content = content;
-        this.user = user;
+        this.sender = sender;
         this.ad = ad;
     }
 
@@ -45,12 +45,12 @@ public class Comment {
         this.content = content;
     }
 
-    public User getUser() {
-        return user;
+    public User getSender() {
+        return sender;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
     public Ad getAd() {
