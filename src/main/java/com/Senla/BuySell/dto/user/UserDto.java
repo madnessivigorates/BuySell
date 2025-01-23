@@ -1,5 +1,6 @@
 package com.Senla.BuySell.dto.user;
 import com.Senla.BuySell.dto.ad.AdDto;
+import com.Senla.BuySell.dto.review.ReviewDto;
 import com.Senla.BuySell.dto.views.Views;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -11,10 +12,12 @@ import java.util.List;
         "nickname",
         "username",
         "password",
-        "ads"
+        "ads",
+        "reviews"
 })
 
 public class UserDto {
+
     @JsonView(Views.Summary.class)
     private Long id;
 
@@ -29,6 +32,9 @@ public class UserDto {
 
     @JsonView(Views.UserDetailed.class)
     private List<AdDto> ads;
+
+    @JsonView(Views.UserPersonal.class)
+    private List<ReviewDto> reviews;
 
     @JsonView(Views.Summary.class)
     private double rating;
@@ -67,7 +73,7 @@ public class UserDto {
     }
 
     public String getPassword() {
-        return password;
+        return "******************";
     }
 
     public void setPassword(String password) {
@@ -84,6 +90,14 @@ public class UserDto {
 
     public List<AdDto> getAds() {
         return ads;
+    }
+
+    public List<ReviewDto> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewDto> reviews) {
+        this.reviews = reviews;
     }
 
     public void setAds(List<AdDto> ads) {

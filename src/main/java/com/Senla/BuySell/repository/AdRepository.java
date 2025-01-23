@@ -17,10 +17,13 @@ public interface AdRepository extends JpaRepository<Ad,Long> {
             "AND (:keyword IS NULL OR LOWER(a.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(a.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
             "AND (a.promotedUntil IS NULL OR a.promotedUntil > CURRENT_TIMESTAMP) " +
-            "GROUP BY a.id " +
-            "ORDER BY a.isPromoted DESC, COALESCE(AVG(r.rating), 0) DESC, a.promotedUntil DESC")
-    List<Ad> findAllByAdTypeAndKeyword(@Param("adType") AdType adType,
-                                       @Param("keyword") String keyword);
+            "GROUP BY a.id")
+    List<Ad> findAllByAdTypeAndKeyword(
+            @Param("adType") AdType adType,
+            @Param("keyword") String keyword);
 
+
+
+    List<Ad> findBySellerId(Long sellerId);
 
 }

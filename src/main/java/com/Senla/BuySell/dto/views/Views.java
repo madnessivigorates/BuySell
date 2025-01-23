@@ -7,7 +7,7 @@ public class Views {
     public static class UserPersonal extends UserDetailed {}
 
     public static class AdDetailed extends Summary {}
-    public static class AdPersonal extends UserDetailed {}
+    public static class AdPersonal extends AdDetailed {}
 
     public static class Admin extends Summary {}
 

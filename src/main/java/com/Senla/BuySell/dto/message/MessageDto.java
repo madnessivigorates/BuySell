@@ -29,6 +29,9 @@ public class MessageDto {
     @JsonView(Views.Summary.class)
     private LocalDateTime sentAt;
 
+    public MessageDto() {
+    }
+
     public MessageDto(String content) {
         this.content = content;
     }

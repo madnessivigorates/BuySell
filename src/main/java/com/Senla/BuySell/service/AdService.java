@@ -1,5 +1,6 @@
 package com.Senla.BuySell.service;
 
+import com.Senla.BuySell.comparators.AdComparators;
 import com.Senla.BuySell.dto.ad.AdDto;
 import com.Senla.BuySell.dto.ad.AdMapper;
 import com.Senla.BuySell.dto.removedAd.RemovedAdDto;
@@ -17,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
@@ -46,11 +47,12 @@ public class AdService {
         this.removedAdDtoMapper = removedAdDtoMapper;
     }
 
-    public List<AdDto> getAllAds(String adType, String keyword) {
+    public List<AdDto> getAllAds(String adType, String keyword, String sortBy, boolean ascending) {
         AdType type = (adType != null && !adType.isEmpty()) ? AdType.fromDisplayName(adType) : null;
-        return adMapper.toDtoList(adRepository.findAllByAdTypeAndKeyword(type, keyword));
+        List<AdDto> adDtos = adMapper.toDtoList(adRepository.findAllByAdTypeAndKeyword(type, keyword));
+        adDtos.sort(sortAdDtoList(sortBy,ascending));
+        return adDtos;
     }
-
 
     public AdDto getAdById(Long id) {
         return adMapper.toDto(findAdById(id));
@@ -58,6 +60,11 @@ public class AdService {
 
     public List<RemovedAdDto> getUserAdsHistory(Long sellerId){
         return removedAdDtoMapper.toDtoList(removedAdRepository.findBySellerId(sellerId));
+    }
+
+    public List<AdDto> getUserAds(){
+        Long userId = userService.getCurrentUserId();
+        return adMapper.toDtoList(adRepository.findBySellerId(userId));
     }
 
     @Transactional
@@ -140,6 +147,19 @@ public class AdService {
             throw new OwnershipException("Это не ваше объявление");
         }
     }
+
+    private Comparator<AdDto> sortAdDtoList(String sortBy, boolean ascending) {
+        Comparator<AdDto> comparator = switch (sortBy) {
+            case "price" -> ascending ? AdComparators.BY_PRICE_ASC : AdComparators.BY_PRICE_DESC;
+            case "location" -> ascending ? AdComparators.BY_CITY : AdComparators.BY_CITY.reversed();
+            case "createdAt" -> ascending ? AdComparators.BY_CREATED_DATE : AdComparators.BY_CREATED_DATE_DESC;
+            case "rating" -> ascending ? AdComparators.BY_RATING : AdComparators.BY_RATING_DESC;
+            case "promoted" -> ascending ? AdComparators.BY_IS_PROMOTED.reversed() : AdComparators.BY_IS_PROMOTED;
+            default -> ascending ? AdComparators.BY_DEFAULT : AdComparators.BY_DEFAULT.reversed();
+        };
+        return comparator;
+    }
+
 
     private <T> void updateIfNotNullOrEmpty(T value, Consumer<T> setter) {
         if (value != null && !(value instanceof String && ((String) value).isEmpty())) {

@@ -23,19 +23,29 @@ public class AdController {
         this.adService = adService;
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     @JsonView(Views.Summary.class)
     public List<AdDto> getAllAds(
             @RequestParam(value = "adType", required = false) String adType,
-            @RequestParam(value = "keyword", required = false) String keyword
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "default") String sortBy,
+            @RequestParam(value = "ascending", required = false, defaultValue = "true") boolean ascending
     ) {
-        return adService.getAllAds(adType, keyword);
+        return adService.getAllAds(adType, keyword, sortBy, ascending);
     }
+
 
     @GetMapping("/get/{id}")
     @JsonView(Views.AdDetailed.class)
     public AdDto getAd(@PathVariable Long id) {
         return adService.getAdById(id);
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/my")
+    @JsonView(Views.AdPersonal.class)
+    public List<AdDto> getUsersAd() {
+        return adService.getUserAds();
     }
 
     @GetMapping("/history/{sellerId}")
@@ -53,22 +63,23 @@ public class AdController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<AdDto> createAd(@RequestBody AdDto adDto) {
-        AdDto createdAd = adService.createAd(adDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAd);
+    public ResponseEntity<String> createAd(@RequestBody AdDto adDto) {
+        adService.createAd(adDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Вы успешно создали своё объявление!");
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/edit/{id}")
-    public AdDto updateAd(@PathVariable Long id, @RequestBody AdDto adDto) {
-        return adService.updateAd(id, adDto);
+    public ResponseEntity<String> updateAd(@PathVariable Long id, @RequestBody AdDto adDto) {
+        adService.updateAd(id, adDto);
+        return ResponseEntity.ok("Вы успешно обновили своё объявление!");
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<Void> deleteAd(@PathVariable Long id, @RequestBody RemovedAdDto removedAdDto) {
+    public ResponseEntity<String> deleteAd(@PathVariable Long id, @RequestBody RemovedAdDto removedAdDto) {
         adService.removeAd(removedAdDto, id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Вы успешно сняли с продаж свое объявление!");
     }
 }
 
