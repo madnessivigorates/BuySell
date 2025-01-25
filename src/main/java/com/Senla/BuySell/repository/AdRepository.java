@@ -22,8 +22,9 @@ public interface AdRepository extends JpaRepository<Ad,Long> {
             @Param("adType") AdType adType,
             @Param("keyword") String keyword);
 
-
-
     List<Ad> findBySellerId(Long sellerId);
 
+    long count();
+
+    long countByAdType(AdType adType);
 }

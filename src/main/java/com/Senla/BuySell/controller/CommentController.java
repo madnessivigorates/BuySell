@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/comment")
 public class CommentController {
     private static final Logger logger = LogManager.getLogger(CommentController.class);
-
     private final CommentService commentService;
 
     @Autowired
