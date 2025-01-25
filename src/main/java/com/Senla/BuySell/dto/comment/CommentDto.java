@@ -16,7 +16,7 @@ public class CommentDto {
     @JsonView(Views.Summary.class)
     private Long id;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.CommentCreate.class})
     private String content;
 
     @JsonView(Views.Summary.class)

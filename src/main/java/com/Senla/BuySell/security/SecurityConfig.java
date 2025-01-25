@@ -50,6 +50,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/users/get/{id}").permitAll()
                                 .requestMatchers("/api/users").permitAll()
                                 .requestMatchers("/api/reviews/{userId}").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui/index.html").permitAll()
                                 .anyRequest().authenticated())
                 .exceptionHandling()
                 .accessDeniedHandler(customAccessDeniedHandler)

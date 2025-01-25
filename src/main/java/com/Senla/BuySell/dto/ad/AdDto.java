@@ -11,7 +11,7 @@ import java.util.List;
         "id",
         "sellerId",
         "sellerRating",
-        "isPromoted",
+        "promoted",
         "promotedUntilInHours",
         "title",
         "formatedAdType",
@@ -25,19 +25,19 @@ public class AdDto {
     @JsonView(Views.Summary.class)
     private Long id;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.AdEdit.class})
     private String title;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.AdEdit.class})
     private String formatedAdType;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.AdEdit.class})
     private String description;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.AdEdit.class})
     private double price;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.AdEdit.class})
     private String location;
 
     @JsonView(Views.Summary.class)
@@ -49,10 +49,10 @@ public class AdDto {
     @JsonView(Views.Summary.class)
     private LocalDateTime createdAt;
 
-    @JsonView(Views.AdPersonal.class)
-    private boolean isPromoted = false;
+    @JsonView({Views.AdPersonal.class,Views.AdCreate.class})
+    private boolean promoted = false;
 
-    @JsonView(Views.AdPersonal.class)
+    @JsonView({Views.AdPersonal.class,Views.AdCreate.class})
     private Long promotedUntilInHours = null;
 
     @JsonView(Views.AdDetailed.class)
@@ -62,9 +62,8 @@ public class AdDto {
     }
 
     public AdDto(String title, String formatedAdType, String description, double price,String location,
-                 Long sellerId, boolean isPromoted, Long promotedUntilInHours) {
-        this.sellerId = sellerId;
-        this.isPromoted = isPromoted;
+                 boolean isPromoted, Long promotedUntilInHours) {
+        this.promoted = isPromoted;
         this.promotedUntilInHours = promotedUntilInHours;
         this.title = title;
         this.formatedAdType = formatedAdType;
@@ -146,11 +145,11 @@ public class AdDto {
     }
 
     public boolean isPromoted() {
-        return isPromoted;
+        return promoted;
     }
 
     public void setPromoted(boolean promoted) {
-        isPromoted = promoted;
+        this.promoted = promoted;
     }
 
     public Long getPromotedUntilInHours() {

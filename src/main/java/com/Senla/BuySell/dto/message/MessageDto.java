@@ -23,7 +23,7 @@ public class MessageDto {
     @JsonView(Views.Summary.class)
     private String senderNickname;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.MessageCreate.class})
     private String content;
 
     @JsonView(Views.Summary.class)

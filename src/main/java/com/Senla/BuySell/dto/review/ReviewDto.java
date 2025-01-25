@@ -21,10 +21,10 @@ public class ReviewDto {
     @JsonView(Views.Summary.class)
     private String senderNickname;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.ReviewCreate.class})
     private String comment;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.ReviewCreate.class})
     private int rating;
 
     public ReviewDto() {

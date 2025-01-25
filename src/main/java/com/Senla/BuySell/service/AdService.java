@@ -69,7 +69,8 @@ public class AdService {
 
     @Transactional
     public AdDto createAd(AdDto adDto) {
-        User seller = userService.findUserById(adDto.getSellerId(), "Пользователь не найден.");
+        Long sellerId = userService.getCurrentUserId();
+        User seller = userService.findUserById(sellerId, "Пользователь не найден");
         LocalDateTime promotedUntilInHours = LocalDateTime.now().plusHours(adDto.getPromotedUntilInHours());
         if(!adDto.isPromoted()){promotedUntilInHours = null;}
         Ad ad = new Ad(

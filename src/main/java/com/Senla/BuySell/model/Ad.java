@@ -34,7 +34,7 @@ public class Ad {
     private User seller;
 
     @Column(name = "is_promoted", nullable = false)
-    private boolean isPromoted;
+    private boolean promoted;
 
     @Column(name = "promoted_until")
     private LocalDateTime promotedUntil;
@@ -49,14 +49,14 @@ public class Ad {
     }
 
     public Ad(String title, AdType adType, String description, double price, String location,
-              User seller, boolean isPromoted, LocalDateTime promotedUntil ) {
+              User seller, boolean promoted, LocalDateTime promotedUntil ) {
         this.title = title;
         this.adType = adType;
         this.description = description;
         this.price = price;
         this.location = location;
         this.seller = seller;
-        this.isPromoted = isPromoted;
+        this.promoted = promoted;
         this.promotedUntil = promotedUntil;
         this.createdAt = LocalDateTime.now();
     }
@@ -78,11 +78,11 @@ public class Ad {
     }
 
     public boolean isPromoted() {
-        return isPromoted;
+        return promoted;
     }
 
     public void setPromoted(boolean promoted) {
-        isPromoted = promoted;
+        this.promoted = promoted;
     }
 
     public Long getId() {

@@ -21,19 +21,19 @@ public class UserDto {
     @JsonView(Views.Summary.class)
     private Long id;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.UserRegisterOrEdit.class})
     private String nickname;
 
-    @JsonView(Views.UserPersonal.class)
+    @JsonView({Views.UserPersonal.class,Views.UserRegisterOrEdit.class})
     private String username;
 
-    @JsonView(Views.UserPersonal.class)
+    @JsonView(Views.UserRegisterOrEdit.class)
     private String password;
 
     @JsonView(Views.UserDetailed.class)
     private List<AdDto> ads;
 
-    @JsonView(Views.UserPersonal.class)
+    @JsonView(Views.UserDetailed.class)
     private List<ReviewDto> reviews;
 
     @JsonView(Views.Summary.class)
@@ -73,7 +73,7 @@ public class UserDto {
     }
 
     public String getPassword() {
-        return "******************";
+        return password;
     }
 
     public void setPassword(String password) {
