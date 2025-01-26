@@ -20,7 +20,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
         PrintWriter out = response.getWriter();
-        out.print("{\"error\": \"У вас недостаточно доступа\"}");
+        out.print("У вас недостаточно доступа");
         out.flush();
     }
 }

@@ -2,6 +2,7 @@ package com.Senla.BuySell.security;
 
 import com.Senla.BuySell.exceptions.CustomAccessDeniedHandler;
 import com.Senla.BuySell.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,6 +54,12 @@ public class SecurityConfig {
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui/index.html").permitAll()
                                 .anyRequest().authenticated())
                 .exceptionHandling()
+                    .authenticationEntryPoint((request, response, authException) -> {
+                        response.setContentType("application/json");
+                        response.setCharacterEncoding("UTF-8");
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.getWriter().write("Сначала авторизируйтесь или зарегистрируйтесь");
+                    })
                 .accessDeniedHandler(customAccessDeniedHandler)
                 .and()
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
