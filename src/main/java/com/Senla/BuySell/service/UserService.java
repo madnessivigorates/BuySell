@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
     public void updateUser(UserDto userDto) {
         Long userId = getCurrentUserId();
         User user = findUserById(userId, "Пользователь не найден.");
-        updateIfNotNullOrEmpty(userDto.getUsername(), user::setUsername);
+        updateIfNotNullOrEmpty(existsByUsername(userDto.getUsername()) ? user.getUsername() : userDto.getUsername(), user::setUsername);
         updateIfNotNullOrEmpty(userDto.getNickname(), user::setNickname);
         updateIfNotNullOrEmpty(userDto.getPassword(), password -> user.setPassword(passwordEncoder.encode(password)));
         userRepository.save(user);

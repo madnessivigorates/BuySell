@@ -12,7 +12,7 @@ import java.util.List;
         "sellerId",
         "sellerRating",
         "promoted",
-        "promotedUntilInHours",
+        "promotedUntil",
         "title",
         "formatedAdType",
         "description",
@@ -50,10 +50,13 @@ public class AdDto {
     private LocalDateTime createdAt;
 
     @JsonView({Views.AdPersonal.class,Views.AdCreate.class})
-    private boolean promoted = false;
+    private boolean promoted;
 
-    @JsonView({Views.AdPersonal.class,Views.AdCreate.class})
-    private Long promotedUntilInHours = null;
+    @JsonView(Views.AdCreate.class)
+    private Long promotedUntilInHours;
+
+    @JsonView(Views.AdPersonal.class)
+    private LocalDateTime promotedUntil;
 
     @JsonView(Views.AdDetailed.class)
     private List<CommentDto> commentList;
@@ -158,6 +161,14 @@ public class AdDto {
 
     public void setPromotedUntilInHours(Long promotedUntilInHours) {
         this.promotedUntilInHours = promotedUntilInHours;
+    }
+
+    public LocalDateTime getPromotedUntil() {
+        return promotedUntil;
+    }
+
+    public void setPromotedUntil(LocalDateTime promotedUntil) {
+        this.promotedUntil = promotedUntil;
     }
 
     public List<CommentDto> getCommentList() {

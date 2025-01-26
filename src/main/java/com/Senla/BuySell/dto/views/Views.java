@@ -16,6 +16,8 @@ public class Views {
 
     public static class MessageCreate{};
 
+    public static class RemovedAdCreate{};
+
     public static class CommentCreate{};
 
     public static class Admin extends Summary {}

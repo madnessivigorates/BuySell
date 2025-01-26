@@ -40,7 +40,7 @@ public class RemovedAdDto {
     @JsonView(Views.Summary.class)
     private Long sellerId;
 
-    @JsonView(Views.Summary.class)
+    @JsonView({Views.Summary.class,Views.RemovedAdCreate.class})
     private String formatReasonForSale;
 
     @JsonView(Views.Summary.class)

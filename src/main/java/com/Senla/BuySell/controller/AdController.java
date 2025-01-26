@@ -104,7 +104,8 @@ public class AdController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<String> deleteAd(@PathVariable Long id, @RequestBody RemovedAdDto removedAdDto) {
+    public ResponseEntity<String> deleteAd(@PathVariable Long id,
+                                           @JsonView(Views.RemovedAdCreate.class) @RequestBody RemovedAdDto removedAdDto) {
         logger.info("Получен запрос на удаление объявления с ID={} по данным: {}", id, removedAdDto);
         adService.removeAd(removedAdDto, id);
         logger.debug("Объявление с ID={} успешно удалено", id);
