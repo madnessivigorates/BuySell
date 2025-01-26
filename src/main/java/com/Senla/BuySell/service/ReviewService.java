@@ -27,8 +27,10 @@ public class ReviewService {
     @Transactional
     public void addReview(Long receiverId, ReviewDto reviewDto) {
         Long senderId = userService.getCurrentUserId();
+        System.out.println(receiverId);
         User receiver = userService.findUserById(receiverId, "Получатель не найден");
         User sender = userService.findUserById(senderId, "Отправитель не найден");
+        System.out.println(receiver + "\n" + sender);
         Review review = new Review(sender, receiver, reviewDto.getRating(), reviewDto.getComment());
         reviewRepository.save(review);
     }

@@ -1,7 +1,5 @@
 package com.Senla.BuySell.service;
 
-import com.Senla.BuySell.dto.review.ReviewDto;
-import com.Senla.BuySell.dto.review.ReviewDtoMapper;
 import com.Senla.BuySell.dto.user.UserDto;
 import com.Senla.BuySell.dto.user.UserDtoMapper;
 import com.Senla.BuySell.model.Role;
