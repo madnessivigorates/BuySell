@@ -12,6 +12,7 @@ import java.util.List;
         "sellerId",
         "sellerRating",
         "promoted",
+        "promotedUntilInHours",
         "promotedUntil",
         "title",
         "formatedAdType",

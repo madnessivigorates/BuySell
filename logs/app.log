@@ -260,3 +260,85 @@
 2025-01-27 13:57:59 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
 2025-01-27 13:58:00 [main] INFO  com.Senla.BuySell.BuySellApplication - Started BuySellApplication in 1.853 seconds (process running for 12.563)
 2025-01-27 13:58:00 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell успешно запущено.
+2025-01-27 19:20:34 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Starting BuySellApplicationTest using Java 22.0.1 with PID 10952 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 19:20:34 [main] DEBUG com.Senla.BuySell.BuySellApplicationTest - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 19:20:34 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 19:20:43 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Started BuySellApplicationTest in 8.897 seconds (process running for 10.857)
+2025-01-27 19:20:43 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 19:20:43 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 10952 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 19:20:43 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 19:20:43 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 19:20:44 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 19:20:45 [main] INFO  com.Senla.BuySell.BuySellApplication - Started BuySellApplication in 1.709 seconds (process running for 12.871)
+2025-01-27 19:20:45 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell успешно запущено.
+2025-01-27 19:25:49 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Starting BuySellApplicationTest using Java 22.0.1 with PID 9168 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 19:25:49 [main] DEBUG com.Senla.BuySell.BuySellApplicationTest - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 19:25:49 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 19:25:58 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Started BuySellApplicationTest in 9.721 seconds (process running for 11.484)
+2025-01-27 19:25:59 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 19:25:59 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 9168 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 19:25:59 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 19:25:59 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 19:26:00 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 19:26:01 [main] INFO  com.Senla.BuySell.BuySellApplication - Started BuySellApplication in 1.974 seconds (process running for 13.82)
+2025-01-27 19:26:01 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell успешно запущено.
+2025-01-27 19:28:45 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Starting BuySellApplicationTest using Java 22.0.1 with PID 12428 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 19:28:45 [main] DEBUG com.Senla.BuySell.BuySellApplicationTest - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 19:28:45 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 19:28:53 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Started BuySellApplicationTest in 8.88 seconds (process running for 10.428)
+2025-01-27 19:28:54 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 19:28:54 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 12428 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 19:28:54 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 19:28:54 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 19:28:55 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 19:28:57 [main] INFO  com.Senla.BuySell.BuySellApplication - Started BuySellApplication in 3.188 seconds (process running for 14.031)
+2025-01-27 19:28:57 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell успешно запущено.
+2025-01-27 19:29:10 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 19:29:11 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication v0.0.1 using Java 22.0.1 with PID 3956 (C:\Users\magic\IdeaProjects\BuySell\target\BuySell-0.0.1.jar started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 19:29:11 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 19:29:11 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 19:29:13 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 20:00:54 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Starting BuySellApplicationTest using Java 22.0.1 with PID 4852 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:00:54 [main] DEBUG com.Senla.BuySell.BuySellApplicationTest - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:00:54 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:02:07 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 20:02:07 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 256 (C:\Users\magic\IdeaProjects\BuySell\target\classes started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:02:07 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:02:07 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:02:11 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 20:06:58 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Starting BuySellApplicationTest using Java 22.0.1 with PID 2652 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:06:58 [main] DEBUG com.Senla.BuySell.BuySellApplicationTest - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:06:58 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:07:08 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Started BuySellApplicationTest in 10.451 seconds (process running for 12.031)
+2025-01-27 20:07:09 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 20:07:09 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 2652 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:07:09 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:07:09 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:07:09 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 20:07:10 [main] INFO  com.Senla.BuySell.BuySellApplication - Started BuySellApplication in 1.77 seconds (process running for 14.179)
+2025-01-27 20:07:10 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell успешно запущено.
+2025-01-27 20:09:22 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 20:09:22 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 7876 (C:\Users\magic\IdeaProjects\BuySell\target\classes started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:09:22 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:09:22 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:09:25 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 20:09:43 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 20:09:44 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 9508 (C:\Users\magic\IdeaProjects\BuySell\target\classes started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:09:44 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:09:44 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:09:46 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 20:09:52 [main] INFO  com.Senla.BuySell.BuySellApplication - Started BuySellApplication in 9.161 seconds (process running for 10.359)
+2025-01-27 20:09:52 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell успешно запущено.
+2025-01-27 20:10:30 [http-nio-8080-exec-10] INFO  com.Senla.BuySell.controller.AdController - Получен запрос на получение всех объявлений с параметрами: adType=null, keyword=null, sortBy=default, ascending=true
+2025-01-27 20:10:31 [http-nio-8080-exec-10] DEBUG com.Senla.BuySell.controller.AdController - Возвращено 2 объявлений
+2025-01-27 20:21:38 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Starting BuySellApplicationTest using Java 22.0.1 with PID 13504 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:21:38 [main] DEBUG com.Senla.BuySell.BuySellApplicationTest - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:21:38 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:21:47 [main] INFO  com.Senla.BuySell.BuySellApplicationTest - Started BuySellApplicationTest in 9.462 seconds (process running for 10.97)
+2025-01-27 20:21:48 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell запускается...
+2025-01-27 20:21:48 [main] INFO  com.Senla.BuySell.BuySellApplication - Starting BuySellApplication using Java 22.0.1 with PID 13504 (started by magic in C:\Users\magic\IdeaProjects\BuySell)
+2025-01-27 20:21:48 [main] DEBUG com.Senla.BuySell.BuySellApplication - Running with Spring Boot v3.3.5, Spring v6.1.14
+2025-01-27 20:21:48 [main] INFO  com.Senla.BuySell.BuySellApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 20:21:49 [main] DEBUG com.Senla.BuySell.security.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-01-27 20:21:50 [main] INFO  com.Senla.BuySell.BuySellApplication - Started BuySellApplication in 2.813 seconds (process running for 14.058)
+2025-01-27 20:21:50 [main] INFO  com.Senla.BuySell.BuySellApplication - Приложение BuySell успешно запущено.

@@ -53,8 +53,8 @@
             <column name="price" value="750.00"/>
             <column name="location" value="Москва"/>
             <column name="seller_id" value="2"/>
-            <column name="is_promoted" value="1"/>
-            <column name="promoted_until" value="2025-01-10T12:00:00"/>
+            <column name="is_promoted" value="0"/>
+            <column name="promoted_until" value="NULL"/>
             <column name="created_at" value="2025-01-08T14:30:00"/>
 
         </insert>
