@@ -12,4 +12,5 @@ IF %ERRORLEVEL% EQU 0 (
 ) ELSE (
     echo Произошла ошибка при сборке проекта.
 )
-pause
+echo Нажмите любую клавишу для выхода...
+set /p=Press Enter to continue..

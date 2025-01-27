@@ -3,12 +3,15 @@
 chcp 65001
 
 REM Укажите путь к вашему jar файлу
-set JAR_PATH=C:\Users\magic\IdeaProjects\BuySell\target\BuySell-0.0.1.jar
+set JAR_PATH=%SCRIPT_DIR%target\BuySell-0.0.1.jar
 
-REM Проверяем, существует ли файл
-if not exist "%JAR_PATH%" (
-    echo Файл %JAR_PATH% не найден!
-    exit /b 1
+REM Проверяем, существует ли JAR файл
+if exist "%JAR_PATH%" (
+    echo JAR файл найден: %JAR_PATH%
+    REM Запускаем JAR файл
+    java -jar "%JAR_PATH%"
+) else (
+    echo Ошибка: JAR файл не найден по пути %JAR_PATH%
 )
 
 REM Запускаем приложение
