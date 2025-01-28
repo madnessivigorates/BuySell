@@ -12,10 +12,6 @@ services:
       - buysell-network
     volumes:
       - mysql-data:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 10s
-      retries: 5
 
   app:
     build:
