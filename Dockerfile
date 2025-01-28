@@ -8,4 +8,4 @@ WORKDIR /app
 COPY target/BuySell-0.0.1.jar /app/BuySell-0.0.1.jar
 
 # Указываем команду для запуска приложения
-CMD ["java", "-jar", "BuySell-0.0.1.jar"]
+CMD ["java", "-jar", "BuySell-0.0.1.jar", "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
